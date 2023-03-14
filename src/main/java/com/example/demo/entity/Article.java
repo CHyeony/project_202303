@@ -1,6 +1,6 @@
 package com.example.demo.entity;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,19 +9,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 @Getter
 public class Article {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "article_idx")
-	private Long article_idx;
+	private Long id;
 
 	@Column(name = "slug")
 	private String slug;
@@ -29,40 +32,15 @@ public class Article {
 	@Column(name = "title")
 	private String title;
 
+	@Column(name = "description")
+	private String description;
+
 	@Column(name = "body")
 	private String body;
 
-	@Column(name = "tagList")
-	private String tagList;
-	// ################# 나중에보기 ##########################
+	@Column(name = "created_at")
+	private LocalDateTime createdAt;
 
-	@Column(name = "createdAt")
-	private Timestamp createdAt;
-
-	@Column(name = "updatedAt")
-	private Timestamp updatedAt;
-
-	@Column(name = "favorited")
-	private boolean favorited;
-
-	@Column(name = "favorited_count")
-	private Long favorited_count;
-
-	@Builder
-	public Article(Long article_idx, String slug, String title, String body, String tagList
-		, Timestamp createdAt, Timestamp updatedAt, boolean favorited,
-		Long favorited_count) {
-
-		this.article_idx = article_idx;
-		this.slug = slug;
-		this.title = title;
-		this.body = body;
-		this.tagList = tagList;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
-		this.favorited = favorited;
-		this.favorited_count = favorited_count;
-
-	}
-
+	@Column(name = "updated_at")
+	private LocalDateTime updatedAt;
 }
