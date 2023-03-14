@@ -4,9 +4,14 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -19,6 +24,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Getter
+@EntityListeners(AuditingEntityListener.class)
 public class Article {
 
 	@Id
@@ -39,8 +45,10 @@ public class Article {
 	private String body;
 
 	@Column(name = "created_at")
+	@CreatedDate
 	private LocalDateTime createdAt;
 
 	@Column(name = "updated_at")
+	@LastModifiedDate
 	private LocalDateTime updatedAt;
 }
