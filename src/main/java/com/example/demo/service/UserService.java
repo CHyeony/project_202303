@@ -34,4 +34,15 @@ public class UserService {
 
 		return UserDto.toUserDto(userAccount);
 	}
+
+	// ///////////////////////// LOGIN ////////////////////////////
+	@Transactional
+	public UserDto Login(UserDto uDto){
+		UserAccount uAccount = userAccountRepository.findByEmail(uDto.getEmail()).orElse(null);
+		if(uAccount == null){ // EMAIL EXCEPTION 다시..
+			throw new BusinessException(ErrorCode.UNKNOWN_SERVER_ERROR);
+		}
+
+		return null; // 나중에 수정해야댐안하면안됨##################
+	}
 }
