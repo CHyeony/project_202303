@@ -53,4 +53,11 @@ public class UserService {
 		// 로그인 성공 시
 		return UserDto.toUserDto(user);
 	}
+
+	@Transactional(readOnly = true)
+	public UserDto getUser(long userId) {
+		UserAccount user = userAccountRepository.findById(userId)
+			.orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+		return UserDto.toUserDto(user);
+	}
 }
