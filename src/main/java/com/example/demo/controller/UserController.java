@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.LoginRequest;
 import com.example.demo.dto.RegistrationRequest;
 import com.example.demo.dto.UserDto;
 import com.example.demo.service.UserService;
@@ -26,6 +27,14 @@ public class UserController {
 		UserDto userResponse = userService.register(request.getUser());
 		Map<String, Object> responseBody = new HashMap<>();
 		responseBody.put("user", userResponse);
+		return responseBody;
+	}
+
+	@PostMapping("/login")
+	public Map<String, Object> login(@RequestBody LoginRequest loginRequest) {
+		UserDto user = userService.login(loginRequest);
+		Map<String, Object> responseBody = new HashMap<>();
+		responseBody.put("user", user);
 		return responseBody;
 	}
 }
