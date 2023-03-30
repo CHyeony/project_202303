@@ -1,6 +1,7 @@
 package com.example.demo.error;
 
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 
 @Getter
 public class BusinessException extends RuntimeException {
