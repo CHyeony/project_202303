@@ -18,10 +18,10 @@ import com.example.demo.dto.UserDto;
 import com.example.demo.service.UserService;
 
 @WebMvcTest(
-	controllers = {UserController.class}
+	controllers = {UsersController.class}
 )
 @ActiveProfiles("local")
-public class UserControllerTest {
+public class UsersControllerTest {
 
 	@Autowired
 	private MockMvc mvc;
