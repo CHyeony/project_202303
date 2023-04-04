@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Builder
 public class UserAccount {
 
 	@Id

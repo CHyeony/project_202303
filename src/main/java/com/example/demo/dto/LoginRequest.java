@@ -12,5 +12,7 @@ import lombok.ToString;
 public class LoginRequest {
 
     private UserDto user;
+    private UserDto username;
+private UserDto email;
 
 }
