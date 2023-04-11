@@ -60,4 +60,20 @@ public class UserService {
 			.orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 		return UserDto.toUserDto(user);
 	}
+
+	@Transactional
+	public UserDto update(long userId, UserDto userDto) {
+		UserAccount userAccount = userAccountRepository.findById(userId)
+			.orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+
+		if (userDto.getPassword() != null) {
+			userAccount.setPassword(userDto.getPassword());
+		}
+
+		userAccount.setEmail(userDto.getEmail());
+		userAccount.setUsername(userDto.getUsername());
+		userAccount.setBio(userDto.getBio());
+		userAccount.setImage(userDto.getImage());
+		return UserDto.toUserDto(userAccount);
+	}
 }
