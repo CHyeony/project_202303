@@ -1,9 +1,15 @@
 package com.example.demo.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.ArticleDto;
+import com.example.demo.entity.Article;
+import com.example.demo.entity.UserAccount;
+import com.example.demo.error.BusinessException;
+import com.example.demo.error.ErrorCode;
 import com.example.demo.repository.ArticleRepository;
+import com.example.demo.repository.UserAccountRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -11,12 +17,19 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ArticleService {
 
+	private final UserAccountRepository userAccountRepository;
+
 	private final ArticleRepository articleRepository;
 
-	// 만들어야 하는 기능: 게시글 생성
-	// 게시글 생성 파라미터: 제목, 내용, 해쉬태그, 본문 요약, 사용자 id
-	// 게시글 생성: 사용자 id로 사용자 조회, 게시글 생성
+	@Transactional
 	public ArticleDto create(ArticleDto articleDto, long userId) {
-		return null;
+		UserAccount user = userAccountRepository.findById(userId)
+			.orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+
+		Article article = ArticleDto.toArticle(articleDto, user);
+		articleRepository.save(article);
+		article.createSlug();
+
+		return ArticleDto.toArticleDto(article);
 	}
 }

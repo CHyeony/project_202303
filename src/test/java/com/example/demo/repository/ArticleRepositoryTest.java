@@ -11,9 +11,6 @@ import org.springframework.test.context.ActiveProfiles;
 import com.example.demo.config.JpaConfig;
 import com.example.demo.entity.Article;
 
-/**
- * @author geonhong.lee
- */
 @DataJpaTest
 @Import(JpaConfig.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
