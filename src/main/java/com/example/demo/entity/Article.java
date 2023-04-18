@@ -8,6 +8,8 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -32,6 +34,10 @@ public class Article {
 	@Column(name = "article_idx")
 	private Long id;
 
+	@ManyToOne
+	@JoinColumn(name = "author_id", referencedColumnName = "user_account_id")
+	private UserAccount author;
+
 	@Column(name = "slug")
 	private String slug;
 
@@ -51,4 +57,15 @@ public class Article {
 	@Column(name = "updated_at")
 	@LastModifiedDate
 	private LocalDateTime updatedAt;
+
+	public void createSlug() {
+		if (this.title == null || this.id == null) {
+			throw new NullPointerException("title and id must not be null");
+		}
+
+		String originalString = this.title;
+		String lowercaseString = originalString.toLowerCase(); // 소문자
+		String hyphenatedString = lowercaseString.replaceAll("[^a-zA-Z0-9]+", "-"); // 특수문자 -> hyphen
+		this.slug = hyphenatedString + this.id;
+	}
 }
