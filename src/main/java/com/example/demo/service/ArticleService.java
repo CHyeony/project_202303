@@ -32,4 +32,32 @@ public class ArticleService {
 
 		return ArticleDto.toArticleDto(article);
 	}
+
+	@Transactional
+	public ArticleDto update(ArticleDto articleDto, long userId) {
+		UserAccount user = userAccountRepository.findById(userId)
+			.orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+
+		String slug = articleDto.getSlug();
+		Article article = articleRepository.findBySlug(slug)
+			.orElseThrow(() -> new BusinessException(ErrorCode.ARTICLE_NOT_FOUND));
+
+		if (!user.equals(article.getAuthor())) {
+			throw new BusinessException(ErrorCode.ARTICLE_NOT_MINE);
+		}
+
+		if (articleDto.getTitle() != null) {
+			article.changeTitle(articleDto.getTitle());
+		}
+
+		if (articleDto.getDescription() != null) {
+			article.changeDescription(articleDto.getDescription());
+		}
+
+		if (articleDto.getBody() != null) {
+			article.changeBody(articleDto.getBody());
+		}
+
+		return ArticleDto.toArticleDto(article);
+	}
 }

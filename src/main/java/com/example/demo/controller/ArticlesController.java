@@ -3,7 +3,9 @@ package com.example.demo.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +31,20 @@ public class ArticlesController {
 	public Map<String, Object> createArticle(@RequestBody ArticleRequest articleRequest, @RequestHeader("Authorization") String token) {
 		long userId = tokenParser.parseToken(token);
 		ArticleDto articleDto = articleService.create(articleRequest.getArticle(), userId);
+		Map<String, Object> responseBody = new HashMap<>();
+		responseBody.put("article", articleDto);
+		return responseBody;
+	}
+
+	@PutMapping("/{slug}")
+	public Map<String, Object> updateArtcile(
+		@PathVariable String slug,
+		@RequestBody ArticleRequest articleRequest,
+		@RequestHeader("Authorization") String token
+	) {
+		articleRequest.getArticle().setSlug(slug);
+		long userId = tokenParser.parseToken(token);
+		ArticleDto articleDto = articleService.update(articleRequest.getArticle(), userId);
 		Map<String, Object> responseBody = new HashMap<>();
 		responseBody.put("article", articleDto);
 		return responseBody;
