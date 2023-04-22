@@ -39,7 +39,7 @@ public class ArticlesController {
 	}
 
 	@GetMapping("/{slug}")
-	public Map<String, Object> selectArticle(@RequestBody ArticleRequest articleRequest, @PathVariable("slug") String slug){
+	public Map<String, Object> selectArticle(@PathVariable String slug){
 		Article article = articleRepository.findBySlug(slug)
 				.orElseThrow(()->new BusinessException(ErrorCode.ARTICLE_NOT_FOUND));
 		Map<String, Object> responseBody = new HashMap<>();
