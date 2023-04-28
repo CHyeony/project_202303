@@ -60,4 +60,18 @@ public class ArticleService {
 
 		return ArticleDto.toArticleDto(article);
 	}
+
+	@Transactional
+	public void delete(String slug, long userId) {
+		UserAccount user = userAccountRepository.findById(userId)
+			.orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+		Article article = articleRepository.findBySlug(slug)
+			.orElseThrow(() -> new BusinessException(ErrorCode.ARTICLE_NOT_FOUND));
+
+		if (!user.equals(article.getAuthor())) {
+			throw new BusinessException(ErrorCode.ARTICLE_NOT_MINE);
+		}
+
+		articleRepository.delete(article);
+	}
 }
