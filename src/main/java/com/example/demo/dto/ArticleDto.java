@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @AllArgsConstructor
@@ -22,6 +23,7 @@ public class ArticleDto {
 
 	private Long id;
 
+	@Setter
 	private String slug;
 
 	private String title;

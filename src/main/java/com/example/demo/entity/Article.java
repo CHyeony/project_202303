@@ -68,4 +68,17 @@ public class Article {
 		String hyphenatedString = lowercaseString.replaceAll("[^a-zA-Z0-9]+", "-"); // 특수문자 -> hyphen
 		this.slug = hyphenatedString + this.id;
 	}
+
+	public void changeTitle(String title) {
+		this.title = title;
+		createSlug();
+	}
+
+	public void changeDescription(String description) {
+		this.description = description;
+	}
+
+	public void changeBody(String body) {
+		this.body = body;
+	}
 }
