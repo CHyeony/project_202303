@@ -18,6 +18,9 @@ public class Like {
     @Column(name="like_id")
     private Long id;
 
+    @Column(name="liked")
+    private Boolean liked;
+
     @ManyToOne
     @JoinColumn(name="article_id")
     private Article article_id;

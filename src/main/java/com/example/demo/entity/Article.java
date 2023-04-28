@@ -1,15 +1,10 @@
 package com.example.demo.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -57,6 +52,9 @@ public class Article {
 	@Column(name = "updated_at")
 	@LastModifiedDate
 	private LocalDateTime updatedAt;
+
+	@OneToMany(mappedBy = "Article")
+	private List<Like> likes = new ArrayList<>();
 
 	public void createSlug() {
 		if (this.title == null || this.id == null) {

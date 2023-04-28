@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.repository.LikeRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,7 @@ public class ArticleService {
 	private final UserAccountRepository userAccountRepository;
 
 	private final ArticleRepository articleRepository;
+	private final LikeRepository likeRepository;
 
 	@Transactional
 	public ArticleDto create(ArticleDto articleDto, long userId) {
