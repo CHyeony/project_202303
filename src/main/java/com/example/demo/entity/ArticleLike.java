@@ -32,9 +32,6 @@ public class ArticleLike {
     @Column(name="like_id")
     private Long id;
 
-    @Column(name="liked")
-    private Boolean liked;
-
     @ManyToOne
     @JoinColumn(name="article_id", foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     private Article article;
