@@ -37,9 +37,6 @@ public class UserAccount {
 	@Column(name = "image")
 	private String image;
 
-	@OneToMany(mappedBy = "userAccount")
-	private List<Like> likes = new ArrayList<>();
-
 	@Builder
 	public UserAccount(Long id, String email, String password, String username, String bio, String image) {
 		this.id = id;

@@ -1,9 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.LikeDTO;
-import com.example.demo.entity.Like;
 import com.example.demo.service.LIkeService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +26,7 @@ public class LikeContorller {
 
     }
 
-    @PostMapping("/favorite")
+    @DeleteMapping("/favorite")
     public ResponseEntity<String> offLike(@RequestBody LikeDTO likeDTO){
         lIkeService.offLike(likeDTO, likeDTO.getUser_id(),likeDTO.getArticle_id());
 

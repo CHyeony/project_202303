@@ -1,20 +1,25 @@
 package com.example.demo.entity;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.*;
-
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import javax.persistence.Column;
+import javax.persistence.ConstraintMode;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -30,7 +35,7 @@ public class Article {
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "author_id", referencedColumnName = "user_account_id")
+	@JoinColumn(name = "author_id", referencedColumnName = "user_account_id", foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
 	private UserAccount author;
 
 	@Column(name = "slug")
@@ -52,9 +57,6 @@ public class Article {
 	@Column(name = "updated_at")
 	@LastModifiedDate
 	private LocalDateTime updatedAt;
-
-	@OneToMany(mappedBy = "Article")
-	private List<Like> likes = new ArrayList<>();
 
 	public void createSlug() {
 		if (this.title == null || this.id == null) {
