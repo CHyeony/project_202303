@@ -40,10 +40,9 @@ public class ArticlesController {
 
 	@GetMapping("/{slug}")
 	public Map<String, Object> selectArticle(@PathVariable String slug){
-		Article article = articleRepository.findBySlug(slug)
-				.orElseThrow(()->new BusinessException(ErrorCode.ARTICLE_NOT_FOUND));
+		ArticleDto articleDto = articleService.selectArticle(slug);
 		Map<String, Object> responseBody = new HashMap<>();
-		responseBody.put("article",article);
+		responseBody.put("article",articleDto);
 		return responseBody;
 	}
 
