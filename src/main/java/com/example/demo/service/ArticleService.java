@@ -24,7 +24,7 @@ public class ArticleService {
 	@Transactional
 	public ArticleDto create(ArticleDto articleDto, long userId) {
 		UserAccount user = userAccountRepository.findById(userId)
-			.orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+				.orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 
 		Article article = ArticleDto.toArticle(articleDto, user);
 		articleRepository.save(article);
@@ -68,6 +68,7 @@ public class ArticleService {
 		Article article = articleRepository.findBySlug(slug)
 			.orElseThrow(() -> new BusinessException(ErrorCode.ARTICLE_NOT_FOUND));
 
+
 		if (!user.equals(article.getAuthor())) {
 			throw new BusinessException(ErrorCode.ARTICLE_NOT_MINE);
 		}
@@ -75,3 +76,4 @@ public class ArticleService {
 		articleRepository.delete(article);
 	}
 }
+
