@@ -49,5 +49,19 @@ public class LikeController {
         return ResponseEntity.ok(likeService.likeCount(slug));
     }
 
+    // 좋아요 여부
+    @GetMapping
+    public ResponseEntity<Boolean> checkLike(
+            @RequestHeader("Authorization") String token,
+            @PathVariable String slug
+    ){
+        long userId = tokenParser.parseToken(token);
+        Boolean articleDto = likeService.checkLike(userId, slug);
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("article", articleDto);
+
+        return ResponseEntity.ok(likeService.checkLike(userId, slug));
+    }
+
 
 }

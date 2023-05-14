@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -68,5 +69,17 @@ public class LikeService {
         List<ArticleLike> articleLike = articleLikeRepository.findByArticleId(articleSlug);
 
         return articleLike.size();
+    }
+
+    // 좋아요 여부
+    public Boolean checkLike(long userId, String articleSlug){
+        UserAccount userAccount = userAccountRepository.findById(userId)
+                .orElseThrow(()->new BusinessException(ErrorCode.USER_NOT_FOUND));
+        Article article = articleRepository.findBySlug(articleSlug)
+                .orElseThrow(()-> new BusinessException(ErrorCode.ARTICLE_NOT_FOUND));
+
+        Optional<ArticleLike> liked = articleLikeRepository.findByArticleAndUserAccount(article, userAccount);
+
+        return liked.isPresent();
     }
 }
