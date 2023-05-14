@@ -3,14 +3,8 @@ package com.example.demo.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.demo.repository.ArticleRepository;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.auth.TokenParser;
 import com.example.demo.dto.ArticleDto;
@@ -27,6 +21,7 @@ public class ArticlesController {
 	private final TokenParser tokenParser;
 
 	private final ArticleService articleService;
+	private final ArticleRepository articleRepository;
 
 	@PostMapping
 	public Map<String, Object> createArticle(@RequestBody ArticleRequest articleRequest, @RequestHeader("Authorization") String token) {
@@ -55,5 +50,13 @@ public class ArticlesController {
 	public void deleteArticle(@PathVariable String slug, @RequestHeader("Authorization") String token) {
 		long userId = tokenParser.parseToken(token);
 		articleService.delete(slug, userId);
+	}
+
+	@GetMapping("/{slug}")
+	public Map<String, Object> selectArticle(@PathVariable String slug){
+		ArticleDto articleDto = articleService.selectArticle(slug);
+		Map<String, Object> responseBody = new HashMap<>();
+		responseBody.put("article",articleDto);
+		return responseBody;
 	}
 }

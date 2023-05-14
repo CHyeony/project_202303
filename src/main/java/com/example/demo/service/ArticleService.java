@@ -75,5 +75,14 @@ public class ArticleService {
 
 		articleRepository.delete(article);
 	}
+
+	@Transactional
+	public ArticleDto selectArticle(String slug){
+		Article article = articleRepository.findBySlug(slug)
+				.orElseThrow(()->new BusinessException(ErrorCode.ARTICLE_NOT_FOUND));
+		articleRepository.save(article);
+
+		return ArticleDto.toArticleDto(article);
+	}
 }
 
