@@ -39,9 +39,9 @@ public class ArticlesController {
 
 	@PutMapping("/{slug}")
 	public Map<String, Object> updateArtcile(
-			@PathVariable String slug,
-			@RequestBody ArticleRequest articleRequest,
-			@RequestHeader("Authorization") String token
+		@PathVariable String slug,
+		@RequestBody ArticleRequest articleRequest,
+		@RequestHeader("Authorization") String token
 	) {
 		articleRequest.getArticle().setSlug(slug);
 		long userId = tokenParser.parseToken(token);
