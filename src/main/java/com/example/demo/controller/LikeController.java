@@ -8,12 +8,7 @@ import com.example.demo.dto.ArticleDto;
 import com.example.demo.service.LikeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/articles/{slug}")
@@ -47,4 +42,12 @@ public class LikeController {
         responseBody.put("article", articleDto);
         return ResponseEntity.ok(responseBody);
     }
+
+    // 좋아요 개수============
+    @GetMapping
+    public ResponseEntity<Integer> likeCount(@PathVariable String slug) {
+        return ResponseEntity.ok(likeService.likeCount(slug));
+    }
+
+
 }

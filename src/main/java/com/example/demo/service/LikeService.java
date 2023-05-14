@@ -14,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -57,5 +59,14 @@ public class LikeService {
             .orElseThrow(() -> new BusinessException(ErrorCode.LIKE_NOT_FOUND));
         articleLikeRepository.delete(liked);
         return ArticleDto.toArticleDto(article);
+    }
+// 좋아요 개수반환
+    public int likeCount(String articleSlug){
+        Article article = articleRepository.findBySlug(articleSlug)
+                .orElseThrow(()-> new BusinessException(ErrorCode.ARTICLE_NOT_FOUND));
+
+        List<ArticleLike> articleLike = articleLikeRepository.findByArticleId(articleSlug);
+
+        return articleLike.size();
     }
 }
