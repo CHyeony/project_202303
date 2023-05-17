@@ -21,6 +21,7 @@ public class ArticleService {
 	private final UserAccountRepository userAccountRepository;
 
 	private final ArticleRepository articleRepository;
+
 	private final ArticleLikeRepository articleLikeRepository;
 
 	@Transactional
@@ -78,13 +79,39 @@ public class ArticleService {
 		articleRepository.delete(article);
 	}
 
-	@Transactional
-	public ArticleDto selectArticle(String slug){
+	@Transactional(readOnly = true)
+	public ArticleDto selectArticle(long userId, String slug){
+		UserAccount user = userAccountRepository.findById(userId)
+			.orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+
 		Article article = articleRepository.findBySlug(slug)
 				.orElseThrow(()->new BusinessException(ErrorCode.ARTICLE_NOT_FOUND));
 		articleRepository.save(article);
 
-		return ArticleDto.toArticleDto(article);
+		boolean favorited = articleLikeRepository.findByArticleAndUserAccount(article, user)
+			.isPresent();
+		int favoritesCount = articleLikeRepository.countByArticleId(article.getId());
+
+		ArticleDto articleDto = ArticleDto.toArticleDto(article);
+		articleDto.setFavorited(favorited);
+		articleDto.setFavoritesCount(favoritesCount);
+
+		return articleDto;
+	}
+
+	@Transactional(readOnly = true)
+	public ArticleDto selectArticle(String slug){
+		Article article = articleRepository.findBySlug(slug)
+			.orElseThrow(()->new BusinessException(ErrorCode.ARTICLE_NOT_FOUND));
+		articleRepository.save(article);
+
+		int favoritesCount = articleLikeRepository.countByArticleId(article.getId());
+
+		ArticleDto articleDto = ArticleDto.toArticleDto(article);
+		articleDto.setFavorited(false);
+		articleDto.setFavoritesCount(favoritesCount);
+
+		return articleDto;
 	}
 }
 

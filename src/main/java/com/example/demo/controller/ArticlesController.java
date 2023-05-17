@@ -53,10 +53,21 @@ public class ArticlesController {
 	}
 
 	@GetMapping("/{slug}")
-	public Map<String, Object> selectArticle(@PathVariable String slug){
-		ArticleDto articleDto = articleService.selectArticle(slug);
+	public Map<String, Object> selectArticle(
+		@PathVariable String slug,
+		@RequestHeader(value = "Authorization", required = false) String token
+	) {
+		ArticleDto articleDto;
 		Map<String, Object> responseBody = new HashMap<>();
-		responseBody.put("article",articleDto);
+
+		if (token == null) {
+			articleDto = articleService.selectArticle(slug);
+		} else {
+			long userId = tokenParser.parseToken(token);
+			articleDto = articleService.selectArticle(userId, slug);
+		}
+
+		responseBody.put("article", articleDto);
 		return responseBody;
 	}
 }
