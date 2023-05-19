@@ -36,6 +36,12 @@ public class ArticleDto {
 
 	private UserDto author;
 
+	@Setter
+	private Boolean favorited;
+
+	@Setter
+	private Integer favoritesCount;
+
 	public static Article toArticle(ArticleDto dto, UserAccount author) {
 		return Article.builder()
 				.author(author)
