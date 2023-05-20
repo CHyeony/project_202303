@@ -19,6 +19,7 @@ public class UserProfileDTO {
 
     public static UserProfileDTO toProfileDto(UserAccount userAccount){
         return UserProfileDTO.builder()
+                .username(userAccount.getUsername())
                 .userId(userAccount.getId())
                 .bio(userAccount.getBio())
                 .image(userAccount.getImage())

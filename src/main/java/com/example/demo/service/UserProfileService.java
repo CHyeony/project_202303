@@ -18,7 +18,7 @@ public class UserProfileService {
 
     @Transactional(readOnly = true)
     public UserProfileDTO getUserProfile(String username){
-        UserAccount userProfile = userProfileRepository.findByUserName(username)
+        UserAccount userProfile = userProfileRepository.findByUsername(username)
                 .orElseThrow(()->new BusinessException(ErrorCode.USER_NOT_FOUND));
 
         return UserProfileDTO.toProfileDto(userProfile);
