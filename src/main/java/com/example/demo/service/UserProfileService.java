@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.UserDto;
+
 import com.example.demo.dto.UserProfileDTO;
 import com.example.demo.entity.UserAccount;
 import com.example.demo.error.BusinessException;
@@ -18,10 +18,11 @@ public class UserProfileService {
 
     @Transactional(readOnly = true)
     public UserProfileDTO getUserProfile(String username){
-        UserAccount userProfile = userProfileRepository.findByUsername(username)
-                .orElseThrow(()->new BusinessException(ErrorCode.USER_NOT_FOUND));
-
-        return UserProfileDTO.toProfileDto(userProfile);
+       return null;
     }
 
+    public UserAccount getProfileByUsername(String username) {
+        return userProfileRepository.findByUsername(username)
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+    }
 }

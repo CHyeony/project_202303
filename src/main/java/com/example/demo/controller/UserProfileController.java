@@ -1,9 +1,11 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.UserProfileDTO;
+import com.example.demo.entity.UserAccount;
 import com.example.demo.service.UserProfileService;
 import com.example.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -18,13 +20,10 @@ public class UserProfileController {
 
     // Authentication optional ========
     @GetMapping("/{username}")
-    public Map<String, Object> getUserProfile(
-       @RequestHeader(value = "Authorization", required = false) String token
-       ,@PathVariable String username
-    ){
-        Map<String, Object> responseEntity = new HashMap<>();
-        UserProfileDTO userProfileDTO = userProfileService.getUserProfile(username);
-        responseEntity.put("UserProfile",userProfileDTO);
-        return responseEntity;
+    public ResponseEntity<UserAccount> getUserProfile(
+            @PathVariable String username,
+         @RequestHeader(value = "Authorization", required = false) String token) {
+        UserAccount profile = userProfileService.getProfileByUsername(username);
+        return ResponseEntity.ok(profile);
     }
 }
