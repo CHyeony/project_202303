@@ -20,10 +20,11 @@ public class UserProfileController {
 
     // Authentication optional ========
     @GetMapping("/{username}")
-    public ResponseEntity<UserAccount> getUserProfile(
-            @PathVariable String username,
+    public UserProfileDTO getUserProfile(
+            @PathVariable("username") String username,
          @RequestHeader(value = "Authorization", required = false) String token) {
-        UserAccount profile = userProfileService.getProfileByUsername(username);
-        return ResponseEntity.ok(profile);
+       // UserAccount profile = userProfileService.getProfileByUsername(username);
+        //return ResponseEntity.ok(profile);
+        return userProfileService.getProfileByUsername(username);
     }
 }

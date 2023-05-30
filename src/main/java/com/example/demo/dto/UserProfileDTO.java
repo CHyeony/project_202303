@@ -10,7 +10,7 @@ import lombok.*;
 @ToString
 // @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserProfileDTO {
-    private Long userId;
+   // private Long userId;
     private String username;
     private String bio;
     private String image;
