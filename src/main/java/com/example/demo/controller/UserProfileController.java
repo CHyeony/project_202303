@@ -23,8 +23,7 @@ public class UserProfileController {
     public UserProfileDTO getUserProfile(
             @PathVariable("username") String username,
          @RequestHeader(value = "Authorization", required = false) String token) {
-       // UserAccount profile = userProfileService.getProfileByUsername(username);
-        //return ResponseEntity.ok(profile);
+
         return userProfileService.getProfileByUsername(username);
     }
 }

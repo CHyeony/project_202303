@@ -2,9 +2,9 @@ package com.example.demo.dto;
 
 import lombok.*;
 
-@AllArgsConstructor
+
 @NoArgsConstructor
-@Builder
+
 @Getter
 @Setter
 @ToString
@@ -21,14 +21,8 @@ public class UserProfileDTO {
         this.username = username;
         this.bio = bio;
         this.image = image;
-//        this.following = following;
     }
 
-//        return UserProfileDTO.builder()
-//                .username(userAccount.getUsername())
-//                .userId(userAccount.getId())
-//                .bio(userAccount.getBio())
-//                .image(userAccount.getImage())
-//                .build();
+
 
 }
