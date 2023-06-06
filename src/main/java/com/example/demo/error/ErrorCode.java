@@ -17,7 +17,9 @@ public enum ErrorCode {
 	ARTICLE_NOT_FOUND("00006", HttpStatus.NOT_FOUND, "게시글을 찾을 수 없습니다."),
 	ARTICLE_NOT_MINE("00007", HttpStatus.FORBIDDEN, "본인이 작성한 게시글만 수정할 수 있습니다."),
 	LIKE_ALREADY_EXISTS("00008", HttpStatus.BAD_REQUEST, "이미 좋아요 를 했습니다."),
-	LIKE_NOT_FOUND("00009", HttpStatus.NOT_FOUND, "좋아요를 한 게시물만 취소를 할 수 있습니다.");
+	LIKE_NOT_FOUND("00009", HttpStatus.NOT_FOUND, "좋아요를 한 게시물만 취소를 할 수 있습니다."),
+	FOLLOW_ALREADY_EXISTS("00010", HttpStatus.BAD_REQUEST, "이미 팔로우를 했습니다.")
+	;
 
 	private final String code;
 	private final HttpStatus status;
