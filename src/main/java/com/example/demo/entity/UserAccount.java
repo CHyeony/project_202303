@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -37,6 +39,13 @@ public class UserAccount {
 	@Column(name = "image")
 	private String image;
 
+	//follow 내가 팔로우
+	@OneToMany(mappedBy = "to")
+	private Set<Follow> toId= new HashSet<>();
+
+	//follow 나를 팔로우
+	@OneToMany(mappedBy = "from")
+	private Set<Follow> fromId = new HashSet<>();
 	@Builder
 	public UserAccount(Long id, String email, String password, String username, String bio, String image) {
 		this.id = id;
@@ -46,4 +55,6 @@ public class UserAccount {
 		this.bio = bio;
 		this.image = image;
 	}
+
+
 }

@@ -1,6 +1,9 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.CommnetDTO;
+import com.example.demo.entity.Comment;
 import com.example.demo.repository.ArticleLikeRepository;
+import com.example.demo.repository.CommnetRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +26,8 @@ public class ArticleService {
 	private final ArticleRepository articleRepository;
 
 	private final ArticleLikeRepository articleLikeRepository;
+
+	private final CommnetRepository commnetRepository;
 
 	@Transactional
 	public ArticleDto create(ArticleDto articleDto, long userId) {
@@ -112,6 +117,24 @@ public class ArticleService {
 		articleDto.setFavoritesCount(favoritesCount);
 
 		return articleDto;
+	}
+
+
+	@Transactional
+	public CommnetDTO addComment(CommnetDTO commnetDTO, long userId,String slug){
+		Article article = articleRepository.findBySlug(slug)
+				.orElseThrow(()->new BusinessException(ErrorCode.ARTICLE_NOT_FOUND));
+
+		UserAccount user = userAccountRepository.findById(userId)
+				.orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+
+	Comment comment = new Comment();
+	comment.setComments(commnetDTO.getContent());
+	comment.setArticle(article);
+
+	Comment saveCom = commnetRepository.save(comment);
+
+		return CommnetDTO.toCommnetDto(saveCom);
 	}
 }
 
