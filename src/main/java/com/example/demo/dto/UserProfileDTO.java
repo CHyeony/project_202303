@@ -4,7 +4,8 @@ import lombok.*;
 
 
 @NoArgsConstructor
-
+@AllArgsConstructor
+@Builder
 @Getter
 @Setter
 @ToString
@@ -24,5 +25,12 @@ public class UserProfileDTO {
     }
 
 
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    @ToString
+    public static class ProfileResponse {
 
+        private UserProfileDTO profile;
+    }
 }
