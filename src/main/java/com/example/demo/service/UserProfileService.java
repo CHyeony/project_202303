@@ -36,6 +36,24 @@ public class UserProfileService {
        return new UserProfileDTO(userProfile.getUsername(), userProfile.getBio(), userProfile.getImage());
     }
 
+    @Transactional(readOnly = true)
+    public UserProfileDTO getProfileByUsername(long userId, String username) {
+        UserAccount me = userAccountRepository.findById(userId)
+            .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+        UserAccount userProfile = userAccountRepository.findByUsername(username)
+            .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+
+        boolean following = followRepository.findByFromIdAndToId(me.getId(), userProfile.getId())
+            .isPresent();
+
+        return UserProfileDTO.builder()
+            .username(userProfile.getUsername())
+            .bio(userProfile.getBio())
+            .image(userProfile.getImage())
+            .following(following)
+            .build();
+    }
+
     @Transactional
     public UserProfileDTO follow(long fromUserId, String toUsername) {
         UserAccount fromUser = userAccountRepository.findById(fromUserId)
