@@ -3,7 +3,7 @@ package com.example.demo.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.example.demo.dto.CommnetDTO;
+import com.example.demo.dto.CommentDTO;
 import com.example.demo.repository.ArticleRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -83,7 +83,7 @@ public class ArticlesController {
 		ArticleDto articleDto;
 
 		long userId = tokenParser.parseToken(token);
-		CommnetDTO createdComment = articleService.addComment(articleRequest.getComment(),userId,slug);
+		CommentDTO createdComment = articleService.addComment(articleRequest.getComment(),userId,slug);
 		Map<String, Object> responseBody = new HashMap<>();
 		responseBody.put("comment", createdComment);
 		return responseBody;

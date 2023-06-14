@@ -11,25 +11,24 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @ToString
-public class CommnetDTO {
+public class CommentDTO {
     private Long id;
-    private String content;
+    private String body;
     private UserDto author;
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    private String body;
 
-    public static CommnetDTO toCommnetDto(Comment comment){
+    public static CommentDTO toCommentDto(Comment comment){
         UserDto userDto = comment.getAuthor() == null ? null : UserDto.builder()
                 .username(comment.getAuthor().getUsername())
                 .bio(comment.getAuthor().getBio())
                 .image(comment.getAuthor().getImage())
                 .build();
 
-        return CommnetDTO.builder()
-                .id(comment.getCom_id())
-                .createAt(comment.getCreateAt())
+        return CommentDTO.builder()
+                .id(comment.getComId())
+                .createdAt(comment.getCreatedAt())
                 .updatedAt(comment.getUpdatedAt())
                 .body(comment.getBody())
                 .author(userDto)

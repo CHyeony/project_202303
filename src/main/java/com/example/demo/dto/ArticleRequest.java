@@ -14,5 +14,5 @@ import lombok.ToString;
 public class ArticleRequest {
 
 	private ArticleDto article;
-	private CommnetDTO comment;
+	private CommentDTO comment;
 }
