@@ -21,6 +21,8 @@ public class CommentDTO {
     private Long id;
     private String body;
     private UserDto author;
+
+    private UserDto username;
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;

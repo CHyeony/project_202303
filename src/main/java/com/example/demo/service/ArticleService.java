@@ -126,8 +126,8 @@ public class ArticleService {
 		Article article = articleRepository.findBySlug(slug)
 				.orElseThrow(()->new BusinessException(ErrorCode.ARTICLE_NOT_FOUND));
 
-		UserAccount user = userAccountRepository.findById(userId)
-				.orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+		//UserAccount user = userAccountRepository.findById(userId)
+		// 		.orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 
 	Comment comment = Comment.builder()
 			.comId(commentDTO.getId())
@@ -136,6 +136,19 @@ public class ArticleService {
 			.build();
 		return CommentDTO.toCommentDto(comment);
 
+	}
+
+	@Transactional
+	public void deleteComment(String slug, long commentId){
+
+		Article article = articleRepository.findBySlug(slug)
+				.orElseThrow(() -> new BusinessException(ErrorCode.ARTICLE_NOT_FOUND));
+
+
+		if(article==null){
+			throw new BusinessException(ErrorCode.ARTICLE_NOT_FOUND);
+		}
+		commentRepository.deleteById(commentId);
 	}
 }
 

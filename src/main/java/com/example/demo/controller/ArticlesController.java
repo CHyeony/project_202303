@@ -88,4 +88,18 @@ public class ArticlesController {
 		responseBody.put("comment", createdComment);
 		return responseBody;
 	}
+
+
+	@DeleteMapping("/{slug}/comments/{comId}")
+	public void DeleteComment(
+			@PathVariable String slug,
+			@PathVariable long comId,
+			@RequestHeader("Authorization") String token
+	){
+
+		long userId = tokenParser.parseToken(token);
+		if(userId>0){
+			articleService.deleteComment(slug, comId);
+		}
+	}
 }
