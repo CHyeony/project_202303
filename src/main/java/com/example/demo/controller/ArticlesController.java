@@ -80,7 +80,7 @@ public class ArticlesController {
 			@RequestHeader(value = "Authorization") String token,
 			@PathVariable String slug){
 
-		ArticleDto articleDto;
+
 
 		long userId = tokenParser.parseToken(token);
 		CommentDTO createdComment = articleService.addComment(articleRequest.getComment(),userId,slug);

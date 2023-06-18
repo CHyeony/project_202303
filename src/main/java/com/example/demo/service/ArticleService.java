@@ -129,13 +129,24 @@ public class ArticleService {
 		UserAccount user = userAccountRepository.findById(userId)
 				.orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 
-	Comment comment = Comment.builder()
-			.comId(commentDTO.getId())
-			.body(commentDTO.getBody())
-			.article(article)
-			.build();
+	Comment comment = CommentDTO.toComment(commentDTO,user);
+	commentRepository.save(comment);
+
 		return CommentDTO.toCommentDto(comment);
 
+	}
+
+	@Transactional
+	public void deleteComment(String slug, long commentId){
+
+		Article article = articleRepository.findBySlug(slug)
+				.orElseThrow(() -> new BusinessException(ErrorCode.ARTICLE_NOT_FOUND));
+
+
+		if(article==null){
+			throw new BusinessException(ErrorCode.ARTICLE_NOT_FOUND);
+		}
+		commentRepository.deleteById(commentId);
 	}
 }
 

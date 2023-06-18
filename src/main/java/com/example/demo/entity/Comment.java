@@ -1,9 +1,11 @@
 package com.example.demo.entity;
 
 import lombok.*;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -15,6 +17,8 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EnableJpaAuditing
+@SpringBootApplication
 @EntityListeners(AuditingEntityListener.class)
 @Builder
 @Table(name = "COMMENT")
@@ -26,6 +30,7 @@ public class Comment {
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
+
     @LastModifiedBy
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
