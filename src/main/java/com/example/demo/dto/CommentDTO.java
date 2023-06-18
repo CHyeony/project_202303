@@ -2,8 +2,14 @@ package com.example.demo.dto;
 
 import com.example.demo.entity.Comment;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -15,8 +21,12 @@ public class CommentDTO {
     private Long id;
     private String body;
     private UserDto author;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    @CreatedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+    @LastModifiedBy
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedAt;
 
 
     public static CommentDTO toCommentDto(Comment comment){

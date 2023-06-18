@@ -129,22 +129,13 @@ public class ArticleService {
 		UserAccount user = userAccountRepository.findById(userId)
 				.orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 
-
 	Comment comment = Comment.builder()
-			.comId(user.getId())
+			.comId(commentDTO.getId())
 			.body(commentDTO.getBody())
 			.article(article)
 			.build();
 		return CommentDTO.toCommentDto(comment);
-// BUILD로 수정 전==========================================
-		//   Comment comment = new Comment();
-//   comment.setComId(user.getId());
-//   comment.setBody(commentDTO.getBody());
-//   comment.setArticle(article);
-//
-//   Comment saveCom = commentRepository.save(comment);
-		//return CommentDTO.toCommentDto(saveCom);
-// BUILD로 수정 전==========================================
+
 	}
 }
 
