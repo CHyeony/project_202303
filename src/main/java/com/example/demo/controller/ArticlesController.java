@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.example.demo.dto.CommentDTO;
 import com.example.demo.repository.ArticleRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -69,5 +70,36 @@ public class ArticlesController {
 
 		responseBody.put("article", articleDto);
 		return responseBody;
+	}
+
+
+	//Authentication required
+	@PostMapping("/{slug}/comments")
+	public Map<String, Object> addComment(
+			@RequestBody ArticleRequest articleRequest,
+			@RequestHeader(value = "Authorization") String token,
+			@PathVariable String slug){
+
+		ArticleDto articleDto;
+
+		long userId = tokenParser.parseToken(token);
+		CommentDTO createdComment = articleService.addComment(articleRequest.getComment(),userId,slug);
+		Map<String, Object> responseBody = new HashMap<>();
+		responseBody.put("comment", createdComment);
+		return responseBody;
+	}
+
+
+	@DeleteMapping("/{slug}/comments/{comId}")
+	public void DeleteComment(
+			@PathVariable String slug,
+			@PathVariable long comId,
+			@RequestHeader("Authorization") String token
+	){
+
+		long userId = tokenParser.parseToken(token);
+		if(userId>0){
+			articleService.deleteComment(slug, comId);
+		}
 	}
 }
