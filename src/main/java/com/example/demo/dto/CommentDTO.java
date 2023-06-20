@@ -3,6 +3,7 @@ package com.example.demo.dto;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import com.example.demo.entity.Article;
 import com.example.demo.entity.Comment;
 import com.example.demo.entity.UserAccount;
 
@@ -26,10 +27,11 @@ public class CommentDTO {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public static Comment toComment(CommentDTO dto, UserAccount author){
+    public static Comment toComment(CommentDTO dto, UserAccount author, Article article){
         return Comment.builder()
                 .author(author)
                 .body(dto.getBody())
+                .article(article)
                 .build();
     }
     public static CommentDTO toCommentDto(Comment comment){

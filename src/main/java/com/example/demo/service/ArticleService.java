@@ -129,8 +129,8 @@ public class ArticleService {
 		UserAccount user = userAccountRepository.findById(userId)
 				.orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 
-	Comment comment = CommentDTO.toComment(commentDTO,user);
-	commentRepository.save(comment);
+		Comment comment = CommentDTO.toComment(commentDTO,user, article);
+		commentRepository.save(comment);
 
 		return CommentDTO.toCommentDto(comment);
 
