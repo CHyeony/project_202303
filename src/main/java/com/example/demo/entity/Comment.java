@@ -1,24 +1,36 @@
 package com.example.demo.entity;
 
-import lombok.*;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import java.util.Date;
+
+import javax.persistence.ConstraintMode;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.Date;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EnableJpaAuditing
-@SpringBootApplication
 @EntityListeners(AuditingEntityListener.class)
 @Builder
 @Table(name = "COMMENT")
