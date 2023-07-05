@@ -1,16 +1,7 @@
 package com.example.demo.entity;
 
 import java.time.LocalDateTime;
-import javax.persistence.Column;
-import javax.persistence.ConstraintMode;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -50,13 +41,15 @@ public class Article {
 	@Column(name = "body")
 	private String body;
 
-	@Column(name = "created_at")
-	@CreatedDate
-	private LocalDateTime createdAt;
+//	@Column(name = "created_at")
+//	@CreatedDate
+//	private LocalDateTime createdAt;
+//
+//	@Column(name = "updated_at")
+//	@LastModifiedDate
+//	private LocalDateTime updatedAt;
 
-	@Column(name = "updated_at")
-	@LastModifiedDate
-	private LocalDateTime updatedAt;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "Article")
 
 	public void createSlug() {
 		if (this.title == null || this.id == null) {

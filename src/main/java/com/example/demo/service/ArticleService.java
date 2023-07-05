@@ -1,6 +1,10 @@
 package com.example.demo.service;
 
+import com.example.demo.auth.TokenParser;
+import com.example.demo.dto.CommentDTO;
+import com.example.demo.entity.Comment;
 import com.example.demo.repository.ArticleLikeRepository;
+import com.example.demo.repository.CommentRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +27,8 @@ public class ArticleService {
 	private final ArticleRepository articleRepository;
 
 	private final ArticleLikeRepository articleLikeRepository;
+
+	private final CommentRepository commentRepository;
 
 	@Transactional
 	public ArticleDto create(ArticleDto articleDto, long userId) {
@@ -112,6 +118,35 @@ public class ArticleService {
 		articleDto.setFavoritesCount(favoritesCount);
 
 		return articleDto;
+	}
+
+
+	@Transactional
+	public CommentDTO addComment(CommentDTO commentDTO, long userId, String slug){
+		Article article = articleRepository.findBySlug(slug)
+				.orElseThrow(()->new BusinessException(ErrorCode.ARTICLE_NOT_FOUND));
+
+		UserAccount user = userAccountRepository.findById(userId)
+				.orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+
+		Comment comment = CommentDTO.toComment(commentDTO,user, article);
+		commentRepository.save(comment);
+
+		return CommentDTO.toCommentDto(comment);
+
+	}
+
+	@Transactional
+	public void deleteComment(String slug, long commentId){
+
+		Article article = articleRepository.findBySlug(slug)
+				.orElseThrow(() -> new BusinessException(ErrorCode.ARTICLE_NOT_FOUND));
+
+
+		if(article==null){
+			throw new BusinessException(ErrorCode.ARTICLE_NOT_FOUND);
+		}
+		commentRepository.deleteById(commentId);
 	}
 }
 

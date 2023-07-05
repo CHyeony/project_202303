@@ -1,8 +1,10 @@
 package com.example.demo.dto;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.example.demo.entity.Article;
+import com.example.demo.entity.Comment;
 import com.example.demo.entity.UserAccount;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -12,6 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -41,6 +44,11 @@ public class ArticleDto {
 
 	@Setter
 	private Integer favoritesCount;
+
+
+	private LocalDateTime createdAt;
+	private LocalDateTime updatedAt;
+
 
 	public static Article toArticle(ArticleDto dto, UserAccount author) {
 		return Article.builder()
@@ -72,6 +80,20 @@ public class ArticleDto {
 				.slug(article.getSlug())
 				.title(article.getTitle())
 				.description(article.getDescription())
+				.body(article.getBody())
+				.author(userDto)
+				.build();
+	}
+
+	public static ArticleDto commnetArticleDto(Article article){
+		UserDto userDto = article.getAuthor() == null ? null : UserDto.builder()
+				.username(article.getAuthor().getUsername())
+				.bio(article.getAuthor().getBio())
+				.image(article.getAuthor().getImage())
+				.build();
+
+		return ArticleDto.builder()
+				.id(article.getId())
 				.body(article.getBody())
 				.author(userDto)
 				.build();
